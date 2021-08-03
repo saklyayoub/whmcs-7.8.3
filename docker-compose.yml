@@ -14,7 +14,7 @@ services:
       TZ: Africa/Tunis
     volumes: 
         - whmcs_mysql:/var/lib/mysql
-        - ./.mysql_inti:/docker-entrypoint-initdb.d
+        - ./.mysql_init:/docker-entrypoint-initdb.d
 
   web:
     image: mindhosting/apachephp:7.2
