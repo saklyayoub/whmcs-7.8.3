@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:5.7.29
+    environment:
+      MYSQL_DATABASE: admin
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: rootpassword
+      TZ: Africa/Tunis
+    volumes: 
+        - ./mysql:/var/lib/mysql
+
+  web:
+    image: mindhosting/apachephp:7.2
+    depends_on:
+      - db
+    links:
+      - db:db
+    hostname: 127.0.0.1
+    environment:
+      FILEMANAGER_ROOT_PATH: '/var/www/html'
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD: password
+      ADMIN_EMAIL: admin@localhost.tn
+      VIRTUAL_HOST: 127.0.0.1
+      TZ: Africa/Tunis
+      PHP_MEMORY_LIMIT: '512M'
+      PHP_MAX_EXECUTION_TIME: '300'
+      PHP_MAX_FILESIZE: '64M'
+      PHP_POST_MAX_SIZE: '128M'
+      PHP_INPUT_VARS: '5000'
+    ports:
+      - 80:80
+    volumes: 
+      - ./:/var/www/html
