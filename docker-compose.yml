@@ -1,16 +1,20 @@
 version: '3'
 
+volumes: 
+  whmcs_mysql: {}
+
 services:
   db:
     image: mysql:5.7.29
     environment:
-      MYSQL_DATABASE: admin
+      MYSQL_DATABASE: whmcs
       MYSQL_USER: admin
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: rootpassword
       TZ: Africa/Tunis
     volumes: 
-        - ./mysql:/var/lib/mysql
+        - whmcs_mysql:/var/lib/mysql
+        - ./.mysql_inti:/docker-entrypoint-initdb.d
 
   web:
     image: mindhosting/apachephp:7.2
